@@ -758,55 +758,230 @@ section:target {
     }
 }
 
+/* Warna utama */
+:root {
+    --primary-blue: #2a3f5f;
+    --secondary-blue: #3a6ea5;
+    --accent-blue: #7fa1c4;
+    --background: #f0f4f8;
+  }
+  
+  /* Animasi */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
 /* Shop */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    justify-content: center;
-    padding: 20px;
+    background: linear-gradient(160deg, var(--background) 20%, #f8faff 100%);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 50px 20px;
+    max-width: 1440px;
+    margin: 0 auto;
+    position: relative;
+    min-height: 100vh;
 }
 
 .card {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: linear-gradient(145deg, #ffffff 60%, #f8faff 100%);
+    border-radius: 16px;
+    box-shadow: 
+        0 4px 6px rgba(0, 0, 0, 0.05),
+        0 10px 15px rgba(42, 63, 95, 0.1);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(42, 63, 95, 0.08);
 }
 
 .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-8px) perspective(1000px) rotateX(2deg) scale(1.02);
+    box-shadow: 
+        0 15px 30px rgba(42, 63, 95, 0.15),
+        0 0 50px rgba(42, 63, 95, 0.05);
 }
 
 .product-card {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
+    padding: 25px;
+    border-radius: 18px;
+    animation: fadeInUp 0.6s ease forwards;
     text-align: center;
-    overflow: hidden;
+    opacity: 0;
     position: relative;
+    background: transparent;
+    transition: all 0.3s ease;
 }
 
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+.product-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,250,253,0.95) 100%);
+    z-index: 1;
+    border-radius: 18px;
+}
+
+.product-card > * {
+    position: relative;
+    z-index: 2;
+}
+
+.product-card:nth-child(n) { 
+    animation-delay: calc(0.2s * var(--i)); 
+}
+
+.product-image-container {
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+    transform-style: preserve-3d;
+    margin-bottom: 20px;
 }
 
 .product-image {
     width: 100%;
-    height: auto;
-    border-radius: 10px;
+    height: 220px;
+    object-fit: contain;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    background: white;
+    padding: 15px;
+}
+
+.product-image:hover {
+    transform: scale(1.08) rotate(0.5deg);
 }
 
 .product-card h3 {
-    font-size: 1.2rem;
-    margin-top: 15px;
-    color: #333;
+    font-size: 1.3rem;
+    margin: 20px 0;
+    background: linear-gradient(45deg, var(--primary-blue), var(--secondary-blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
+/* New Badge */
+.product-card::after {
+    content: "New";
+    position: absolute;
+    top: 15px;
+    right: -30px;
+    background: var(--secondary-blue);
+    color: white;
+    padding: 8px 35px;
+    font-size: 0.9em;
+    font-weight: 700;
+    transform: rotate(45deg);
+    box-shadow: 0 3px 12px rgba(58, 110, 165, 0.3);
+    z-index: 3;
+    transition: all 0.3s ease;
+}
+
+.product-card:hover::after {
+    right: -25px;
+}
+
+/* Hover Effect Layer */
+.product-card:hover .hover-effect {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.product-card button {
+    background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-card button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.3),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.product-card button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(42, 63, 95, 0.3);
+}
+
+.product-card button:hover::before {
+    left: 100%;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Glow Effect */
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 16px;
+    box-shadow: 0 0 40px rgba(42, 63, 95, 0.05);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover::after {
+    opacity: 1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        padding: 30px 15px;
+    }
+    
+    .product-image {
+        height: 180px;
+    }
+}
 
 /* Social Icons */
 .social-icons {
